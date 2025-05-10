@@ -1,0 +1,5 @@
+${PODS_ROOT}/Target Support Files/Pods-PokeDex-PokeDexUITests/Pods-PokeDex-PokeDexUITests-resources.sh
+${PODS_CONFIGURATION_BUILD_DIR}/Alamofire/Alamofire.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/Realm/realm_objc_privacy.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/RealmSwift/realm_swift_privacy.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.bundle

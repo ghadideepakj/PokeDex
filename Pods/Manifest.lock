@@ -1,0 +1,41 @@
+PODS:
+  - Alamofire (5.9.1)
+  - Realm (20.0.2):
+    - Realm/Headers (= 20.0.2)
+  - Realm/Headers (20.0.2)
+  - RealmSwift (20.0.2):
+    - Realm (= 20.0.2)
+  - SDWebImage (5.21.0):
+    - SDWebImage/Core (= 5.21.0)
+  - SDWebImage/Core (5.21.0)
+  - SwiftLoader (1.0.0)
+  - Toast-Swift (5.0.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - Realm (~> 20.0)
+  - RealmSwift (~> 20.0)
+  - SDWebImage (~> 5.0)
+  - SwiftLoader (~> 1.0)
+  - Toast-Swift (~> 5.0.0)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Realm
+    - RealmSwift
+    - SDWebImage
+    - SwiftLoader
+    - Toast-Swift
+
+SPEC CHECKSUMS:
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  Realm: 395416e3b150a37ca12fee6477a2ec8c11f8a048
+  RealmSwift: 199fd4d7e86491d1147c662c6a36aa55136a54d0
+  SDWebImage: f84b0feeb08d2d11e6a9b843cb06d75ebf5b8868
+  SwiftLoader: f12f3a6fb42576862a3a5eb80c7e59fc881b6982
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
+
+PODFILE CHECKSUM: f7f8e569d9a499f865eadcbd38c09d785ab3d260
+
+COCOAPODS: 1.16.2
