@@ -93,20 +93,21 @@ class PokemonDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return detailsArrayName?.count ?? 0
         return statTuple.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = detailsTableView.dequeueReusableCell(withIdentifier: "PokedetailsTableCell", for: indexPath) as! PokedetailsTableCell
-        let maskLayer = CAShapeLayer()
-        maskLayer.path = UIBezierPath(
-            roundedRect: cell.outerView.bounds,
-            byRoundingCorners: [.topRight, .bottomRight],
-            cornerRadii: CGSize(width: 25.0, height: 25.0)
-        ).cgPath
-        cell.outerView.layer.mask = maskLayer
         
+//        let maskLayer = CAShapeLayer()
+//        maskLayer.path = UIBezierPath(
+//            roundedRect: cell.outerView.bounds,
+//            byRoundingCorners: [.topRight, .bottomRight],
+//            cornerRadii: CGSize(width: 25.0, height: 25.0)
+//        ).cgPath
+//        cell.outerView.layer.mask = maskLayer
+        
+        cell.outerView.layer.cornerRadius = cell.outerView.frame.height / 2
         let statObj = statTuple[indexPath.row]
         cell.powerNameLabel.text = statObj.name
         cell.strenghtLabel.text = "\(statObj.value)"

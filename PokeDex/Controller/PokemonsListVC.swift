@@ -34,7 +34,7 @@ class PokemonsListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         UserDefaults.standard.set(true, forKey: "isRefreshBtnEnable")
     }
     
-    //Custom floating button
+    //Custom floating refresh button
     func addRefreshBtn() {
         let buttonSize: CGFloat = 50
         let buttonX = view.frame.size.width - buttonSize - 50
@@ -50,7 +50,6 @@ class PokemonsListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         config.baseForegroundColor = .black
         config.cornerStyle = .capsule // Fully rounded
         config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
-        
         refreshButton.configuration = config
         
         // Add shadow styling
@@ -110,7 +109,7 @@ class PokemonsListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             switch response.result {
             case .success(let listModel):
                 let realm = try! Realm()
-                
+                let group = DispatchGroup()
                 guard let results = listModel.results else {
                     print("No results found.")
                     //self.removeSpinner()
@@ -118,6 +117,7 @@ class PokemonsListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                     return
                 }
                 for result in results {
+                    group.enter()
                     // For each item in the list, fetch details
                     AF.request(result.url).responseDecodable(of: PokemonDetail.self) { detailResponse in
                         switch detailResponse.result {
@@ -143,19 +143,30 @@ class PokemonsListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                 realm.add(pokemonItem, update: .modified)
                             }
                             
-                            DispatchQueue.main.async {
-                                //self.removeSpinner()
-                                SwiftLoader.hide()
-                                self.pokeListTableView.reloadData()
-                            }
+//                            DispatchQueue.main.async {
+//                                //self.removeSpinner()
+//                                let realm = try! Realm()
+//                                let savedPokemons = realm.objects(PokemonListItemModel.self).sorted(byKeyPath: "id", ascending: true)
+//                                self.pokemonList = savedPokemons
+//                                SwiftLoader.hide()
+//                                self.pokeListTableView.reloadData()
+//                            }
                             
                         case .failure(let error):
                             self.removeSpinner()
                             print("Error fetching detail for \(String(describing: result.name)): \(error)")
                             self.view.makeToast("Something went wrong. Please try again", duration: 3.0, position: .center)
                         }
+                        group.leave()
                     }
                 }
+                
+                group.notify(queue: .main) {
+                            let savedPokemons = realm.objects(PokemonListItemModel.self).sorted(byKeyPath: "id", ascending: true)
+                            self.pokemonList = savedPokemons
+                            self.pokeListTableView.reloadData()
+                            SwiftLoader.hide()
+                        }
                 
             case .failure(let error):
                 print("Failed to fetch Pokémon list: \(error)")
@@ -203,7 +214,7 @@ class PokemonsListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             if let realm = try? Realm(),
                let cachedItem = realm.object(ofType: PokemonListItemModel.self, forPrimaryKey: selectedPokemon.name) {
                 detailVC.statTuple = [
-                    (name: "base_experience", value: cachedItem.base_experience),
+                    (name: "Base-Experience", value: cachedItem.base_experience),
                     (name: "Speed", value: cachedItem.speed),
                     (name: "Height", value: cachedItem.height),
                     (name: "Weight", value: cachedItem.weight),
