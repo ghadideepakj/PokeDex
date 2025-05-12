@@ -143,15 +143,6 @@ class PokemonsListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                                 realm.add(pokemonItem, update: .modified)
                             }
                             
-//                            DispatchQueue.main.async {
-//                                //self.removeSpinner()
-//                                let realm = try! Realm()
-//                                let savedPokemons = realm.objects(PokemonListItemModel.self).sorted(byKeyPath: "id", ascending: true)
-//                                self.pokemonList = savedPokemons
-//                                SwiftLoader.hide()
-//                                self.pokeListTableView.reloadData()
-//                            }
-                            
                         case .failure(let error):
                             self.removeSpinner()
                             print("Error fetching detail for \(String(describing: result.name)): \(error)")
@@ -169,6 +160,7 @@ class PokemonsListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                         }
                 
             case .failure(let error):
+                SwiftLoader.hide()
                 print("Failed to fetch Pokémon list: \(error)")
                 self.view.makeToast("Something went wrong. Please try again", duration: 3.0, position: .center)
             }

@@ -36,6 +36,7 @@ class PokemonDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             if let imageURL = URL(string: pokeImageUrl ?? "") {
                 pokemonImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "placeholder"))
             } else {
+                self.view.makeToast("Unable to load image, Please check internet Connection", duration: 3.0, position: .center)
                 pokemonImageView.image = UIImage(named: "placeholder")
             }
             nameLabel.text = pokemonName
